@@ -2,6 +2,10 @@ import type { NextAuthOptions } from "next-auth";
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
+import z from "zod";
+import { getUser } from "./getUser";
+import bcrypt from "bcrypt";
+import { User } from "@/model/User";
 
 // Define authentication options using NextAuthOptions interface
 export const authOptions: NextAuthOptions = {
@@ -29,48 +33,53 @@ export const authOptions: NextAuthOptions = {
     // }),
     CredentialsProvider({
       name: "Credentials",
-
       credentials: {
         username: { label: "Username", type: "text", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
         // Add logic here to look up the user from the credentials supplied
-        return {
-          id: "user1"
-        }
-        // const res = await fetch("http://localhost:8000/auth/login", {
-        //   method: "POST",
-        //   headers: {
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     username: credentials?.username,
-        //     password: credentials?.password,
-        //   }),
-        // });
-        // const user = await res.json();
+        const parsedCredentials = z
+          .object({ email: z.string().email(), password: z.string().min(6) })
+          .safeParse(credentials);
 
-        // if (user) {
-        //   return user;
-        // } else {
-        //   return null;
-        // }
+        if (parsedCredentials.success) {
+          let { email, password } = parsedCredentials.data;
+          let user = await getUser(email);
+          if (!user) return null;
+
+          const passwordsMatch = await bcrypt.compare(password, user.password);
+          console.log("password match", passwordsMatch, credentials)
+          if (passwordsMatch) return { id: user._id, ...user};
+        }
+        console.log("Invalid credentials");
+        return null;
       },
     }), // Include a Credentials provider (username/password)
   ],
   callbacks: {
+    // authorized({ auth, request: { nextUrl } }) {
+    //   const isLoggedIn = !!auth?.user;
+    //   const isOnDashboard = nextUrl.pathname.startsWith('/dashboard');
+    //   if (isOnDashboard) {
+    //     if (isLoggedIn) return true;
+    //     return false; // Redirect unauthenticated users to login page
+    //   } else if (isLoggedIn) {
+    //     return Response.redirect(new URL('/dashboard', nextUrl));
+    //   }
+    //   return true;
+    // },
     async jwt({ token, account }) {
-        // Persist the OAuth access_token to the token right after signin
-        if (account) {
-          token.accessToken = account.access_token
-        }
-        return token
-      },
-      async session({ session, token, user }) {
-        // Send properties to the client, like an access_token from a provider.
-        // session.accessToken = token.accessToken
-        return session
+      // Persist the OAuth access_token to the token right after signin
+      if (account) {
+        token.accessToken = account.access_token;
       }
+      return token;
+    },
+    async session({ session, token, user }) {
+      // Send properties to the client, like an access_token from a provider.
+      // session.accessToken = token.accessToken
+      return session;
+    },
   },
 };
