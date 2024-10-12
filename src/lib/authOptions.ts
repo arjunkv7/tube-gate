@@ -3,9 +3,9 @@ import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import z from "zod";
-import { getUser } from "./getUser";
+import { createUserGoogleLogin, getUser, updateUserGoogleLogin } from "./user";
 import bcrypt from "bcrypt";
-import { User } from "@/model/User";
+import UserModel, { User } from "@/model/User";
 
 // Define authentication options using NextAuthOptions interface
 export const authOptions: NextAuthOptions = {
@@ -25,6 +25,12 @@ export const authOptions: NextAuthOptions = {
       // Configure Google authentication provider with environment variables
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          scope:
+            "openid profile email https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.upload",
+        },
+      },
     }),
     // GitHubProvider({
     //   // Configure GitHub authentication provider with environment variables
@@ -49,8 +55,8 @@ export const authOptions: NextAuthOptions = {
           if (!user) return null;
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
-          console.log("password match", passwordsMatch, credentials)
-          if (passwordsMatch) return { id: user._id, ...user};
+          // console.log("password match", passwordsMatch, credentials)
+          if (passwordsMatch) return { id: user._id, ...user };
         }
         console.log("Invalid credentials");
         return null;
@@ -80,6 +86,23 @@ export const authOptions: NextAuthOptions = {
       // Send properties to the client, like an access_token from a provider.
       // session.accessToken = token.accessToken
       return session;
+    },
+    async signIn({ user, account, profile }) {
+      if (user && account) {
+        try {
+          let existingUser = await getUser(user.email || "");
+          console.log(existingUser);
+          if (existingUser) {
+            await updateUserGoogleLogin(user, account);
+          } else {
+            await createUserGoogleLogin(user, account);
+          }
+        } catch (error) {
+          console.error("Error saving token or creating user:", error);
+          return false; // Deny sign-in if there's an error
+        }
+      }
+      return true;
     },
   },
 };
