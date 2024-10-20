@@ -71,3 +71,18 @@ export async function updateUserGoogleLogin(
     throw error;
   }
 }
+
+export async function getUserGoogleToken(
+  email: any
+) {
+  try {
+    await db();
+    let user = await UserModel.findOne(
+      { email: email }
+    );
+    return user?.googleAccessToken;
+  } catch (error) {
+    // console.log(error);
+    throw error;
+  }
+}
