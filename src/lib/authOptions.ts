@@ -29,6 +29,8 @@ export const authOptions: NextAuthOptions = {
         params: {
           scope:
             "openid profile email https://www.googleapis.com/auth/youtube https://www.googleapis.com/auth/youtube.upload",
+            access_type: "offline", // Request offline access to get refresh token
+            prompt: "consent", 
         },
       },
     }),

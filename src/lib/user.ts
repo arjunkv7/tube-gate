@@ -27,6 +27,19 @@ export async function getUser(email: string) {
   }
 }
 
+export async function AddSubUser(firstName: string, lastName: string, email: string, mainUser: string) {
+  try {
+    await db();
+    let user = await UserModel.findOne({ email }).lean();
+    if (user) return user as User | null; // Type cast to User;
+    return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+
 export async function createUserGoogleLogin(
   user: any,
   account: any,

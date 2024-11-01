@@ -15,7 +15,7 @@ export default function DefaultLayout({
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { data: session, status } = useSession();
-  console.log("session: ", session, "status: ", status)
+  // console.log("session: ", session, "status: ", status)
   // const router = useRouter();
 
   useEffect(() => {
