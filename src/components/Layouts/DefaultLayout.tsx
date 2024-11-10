@@ -50,6 +50,7 @@ export default function DefaultLayout({
               <Header
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
+                user={session.user}
               />
               {/* <!-- ===== Header End ===== --> */}
 

@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import mongoose, { Document, Schema, model } from "mongoose";
 import { string } from "zod";
 
@@ -7,8 +8,11 @@ export interface User extends Document {
   image?: string;
   googleAccessToken?: string;
   googleRefreshToken?: string;
+  subUser?: boolean;
+  mainUserId?: ObjectId;
   email: string;
   password: string;
+  _id: ObjectId
 }
 
 let userSchema: Schema<User> = new Schema(
@@ -20,6 +24,8 @@ let userSchema: Schema<User> = new Schema(
       unique: true,
       required: true,
     },
+    subUser: Boolean,
+    mainUserId: ObjectId,
     image: String,
     googleRefreshToken: String,
     googleAccessToken: String,

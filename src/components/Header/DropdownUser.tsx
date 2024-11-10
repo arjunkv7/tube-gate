@@ -4,9 +4,21 @@ import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
 import { signIn, signOut } from "next-auth/react";
 
-const DropdownUser = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
+interface User {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  image?: string
+}
+
+interface DropDownProperties {
+  user: User
+} 
+
+const DropdownUser:React.FC<DropDownProperties> = ({ user}) => {
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  console.log("user: ", user)
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -16,16 +28,17 @@ const DropdownUser = () => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+           {user.name}
           </span>
-          <span className="block text-xs">UX Designer</span>
+          <span className="block text-xs">  {user.name}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
           <Image
             width={112}
             height={112}
-            src={"/images/user/user-01.png"}
+            className="rounded-full"
+            src={user.image || ""}
             style={{
               width: "auto",
               height: "auto",

@@ -1,6 +1,7 @@
 import { User } from "@/model/User";
 import UserModel from "@/model/User";
 import db from "@/lib/mongodb";
+import { ObjectId } from "mongodb";
 
 export type GoogleUserDetails = {
   email?: string;
@@ -27,23 +28,46 @@ export async function getUser(email: string) {
   }
 }
 
-export async function AddSubUser(firstName: string, lastName: string, email: string, mainUser: string) {
-  try {
-    await db();
-    let user = await UserModel.findOne({ email }).lean();
-    if (user) return user as User | null; // Type cast to User;
-    return null;
-  } catch (error) {
-    console.log(error);
-    return null;
-  }
+export async function addSubUser(
+  firstName: string,
+  lastName: string,
+  email: string,
+  mainUserId: string,
+) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      await db();
+      let user = await UserModel.findOne({ email }).lean();
+      if (user) return reject({ message: "Email already exist." });
+      let newUser = await UserModel.create({
+        firstName,
+        lastName,
+        email,
+        mainUserId,
+      });
+      return resolve(newUser);
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  });
 }
 
+export async function getSubUsers(mainUserId: string) {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let allSubUsers = await UserModel.find({
+        mainUserId: new ObjectId(mainUserId),
+      });
+      resolve(allSubUsers);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+}
 
-export async function createUserGoogleLogin(
-  user: any,
-  account: any,
-) {
+export async function createUserGoogleLogin(user: any, account: any) {
   try {
     await db();
     // If the user doesn't exist, create a new user in the collection
@@ -62,13 +86,10 @@ export async function createUserGoogleLogin(
   }
 }
 
-export async function updateUserGoogleLogin(
-  user: any,
-  account: any,
-) {
+export async function updateUserGoogleLogin(user: any, account: any) {
   try {
     await db();
-    console.log(user, account)
+    console.log(user, account);
     await UserModel.findOneAndUpdate(
       { email: user.email },
       {
@@ -85,14 +106,10 @@ export async function updateUserGoogleLogin(
   }
 }
 
-export async function getUserGoogleToken(
-  email: any
-) {
+export async function getUserGoogleToken(email: any) {
   try {
     await db();
-    let user = await UserModel.findOne(
-      { email: email }
-    );
+    let user = await UserModel.findOne({ email: email });
     return user?.googleAccessToken;
   } catch (error) {
     // console.log(error);

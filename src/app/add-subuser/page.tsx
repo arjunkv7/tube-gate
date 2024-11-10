@@ -1,23 +1,26 @@
 "use client";
-import ECommerce from "@/components/Dashboard/E-commerce";
-import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";
+import { redirect, useRouter } from 'next/navigation'
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ChangeEvent, useEffect, useState } from "react";
 
 export default function AddSubUser() {
   const [firstName, setfirstName] = useState<String | null>("");
   const [lastName, setlastName] = useState("");
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
 
   interface UploadResponse {
-    videoId: string;
+    message: string;
     error?: string;
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setError(false)
+    setErrorMessage("")
     let body = {
       firstName,
       lastName,
@@ -25,17 +28,19 @@ export default function AddSubUser() {
     }
 
     try {
-      const response = await fetch("/api/add-subuser", {
+      const response = await fetch("/api/user/add-subuser", {
         method: "POST",
         body: JSON.stringify(body),
       });
 
       const data: UploadResponse = await response.json();
       if (response.ok) {
-       
-        alert("Video uploaded successfully!");
+       router.push('/view-subusers')
+        // alert("Video uploaded successfully!");
       } else {
-        alert(`Error: ${data.error}`);
+        setError(true)
+        setErrorMessage(data.message)
+        // alert(`Error: ${data.message}`);
       }
     } catch (error: any) {
       console.error("Upload failed:", error);
@@ -58,6 +63,7 @@ export default function AddSubUser() {
             </div>
             <form action="#" onSubmit={handleSubmit}>
               <div className="p-6.5">
+              {error && <h1 className="text-center mb-4.5 text-red">{errorMessage}</h1>}
                 <div className="mb-4.5 flex flex-col gap-6 xl:flex-row">
                   <div className="w-full xl:w-1/2">
                     <label className="mb-3 block text-sm font-medium text-black dark:text-white">

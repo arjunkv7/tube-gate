@@ -87,6 +87,11 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token, user }) {
       // Send properties to the client, like an access_token from a provider.
       // session.accessToken = token.accessToken
+      let userDetails = await getUser(session.user.email || "");
+     
+      if (userDetails) {
+        session.user._id = userDetails._id; // Add the user's _id to the session
+      }
       return session;
     },
     async signIn({ user, account, profile }) {
