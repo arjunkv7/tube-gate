@@ -44,6 +44,7 @@ export async function addSubUser(
         lastName,
         email,
         mainUserId,
+        subUser: true
       });
       return resolve(newUser);
     } catch (error) {

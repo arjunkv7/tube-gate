@@ -68,8 +68,7 @@ export default function DefaultLayout({
         </>
       ) : (
         <>
-        <h1>;laskjdfdf</h1>
-          <Link href= "http://localhost:3000/api/auth/signin">dfgsf</Link>
+        <h1>You are not logged in, <span> <Link href= "http://localhost:3000/api/auth/signin">Click here to login</Link></span></h1>  
         </>
       )}
     </>
