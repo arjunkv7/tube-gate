@@ -2,6 +2,7 @@ import { User } from "@/model/User";
 import UserModel from "@/model/User";
 import db from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
+import { hashPassword } from "./auth";
 
 export type GoogleUserDetails = {
   email?: string;
@@ -39,12 +40,15 @@ export async function addSubUser(
       await db();
       let user = await UserModel.findOne({ email }).lean();
       if (user) return reject({ message: "Email already exist." });
+
+      let defaultPassword = await hashPassword("password@123")
       let newUser = await UserModel.create({
         firstName,
         lastName,
         email,
         mainUserId,
-        subUser: true
+        subUser: true,
+        password: defaultPassword
       });
       return resolve(newUser);
     } catch (error) {
