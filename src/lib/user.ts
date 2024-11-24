@@ -20,7 +20,7 @@ export type GoogleAccountDetails = {
 export async function getUser(email: string) {
   try {
     await db();
-    let user = await UserModel.findOne({ email }).lean();
+    let user = await UserModel.findOne({ email }).populate("mainUserId");
     if (user) return user as User | null; // Type cast to User;
     return null;
   } catch (error) {

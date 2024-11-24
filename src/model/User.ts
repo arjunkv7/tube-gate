@@ -9,7 +9,7 @@ export interface User extends Document {
   googleAccessToken?: string;
   googleRefreshToken?: string;
   subUser?: boolean;
-  mainUserId?: ObjectId;
+  mainUserId?: any;
   email: string;
   password: string;
   _id: ObjectId
@@ -25,7 +25,10 @@ let userSchema: Schema<User> = new Schema(
       required: true,
     },
     subUser: Boolean,
-    mainUserId: ObjectId,
+    mainUserId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "users"
+    },
     image: String,
     googleRefreshToken: String,
     googleAccessToken: String,

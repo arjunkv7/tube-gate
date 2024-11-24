@@ -403,13 +403,24 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         {/* <!-- SIDEBAR HEADER --> */}
         <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
           <Link href="/">
-            <Image
-              width={176}
-              height={32}
-              src={"/images/logo/logo.svg"}
-              alt="Logo"
-              priority
-            />
+            <span style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <Image
+                width={50}
+                height={50}
+                src="/images/logo/youtube.png"
+                alt="Logo"
+                priority
+              />
+              <span
+                style={{
+                  fontWeight: "bold",
+                  fontSize: "20px",
+                  color: "#FFFFFF",
+                }}
+              >
+                Tube Gate
+              </span>
+            </span>
           </Link>
 
           <button
