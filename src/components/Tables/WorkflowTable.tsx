@@ -21,7 +21,7 @@ export interface VideoRequest {
 }
 
 interface WorkflowTableProps {
-  data: VideoRequest[];
+  data: any[];
 }
 
 const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
@@ -75,13 +75,13 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               <th className="min-w-[150px] px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
-                Sub User Name
+                Requestor Name
               </th>
               <th className="min-w-[220px] px-4 py-4 font-medium text-black dark:text-white">
-                Title
+                Video Title
               </th>
               <th className="min-w-[300px] px-4 py-4 font-medium text-black dark:text-white">
-                Description
+                Video Description
               </th>
               <th className="min-w-[120px] px-4 py-4 font-medium text-black dark:text-white">
                 Status
@@ -96,21 +96,21 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
               <tr key={key}>
                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
-                    {request.subUserName}
+                    {request.subUserId.firstName}
                   </h5>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {request.title}
+                    {request.videoId.title}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
                   <p className="text-black dark:text-white">
-                    {request.description}
+                    {request.videoId.description}
                   </p>
                 </td>
                 <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-                  <p className={`text-black dark:text-white ${request.status === 'approved' ? 'text-success' : request.status === 'rejected' ? 'text-danger' : 'text-warning'}`}>
+                  <p className={`text-black dark:text-white ${request.videoId.status === 'approved' ? 'text-success' : request.videoId.status === 'rejected' ? 'text-danger' : 'text-warning'}`}>
                     {request.status}
                   </p>
                 </td>

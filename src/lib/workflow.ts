@@ -47,7 +47,7 @@ export async function getPendingRequests(userId: mongoose.Types.ObjectId) {
       mainUserId: new ObjectId(userId),
       status: "PENDING",
     })
-      .populate("videoId subUserId")
+      .populate("videoId subUserId", "-_id -password -mainUserId -userId")
       .lean();
     console.log("after ");
     return allRequests;
