@@ -79,7 +79,9 @@ const menuGroups = [
         ),
         label: "Video Management",
         route: "#",
-        children: [{ label: "Upload Video", route: "/upload-video" }],
+        children: [{ label: "Upload Video", route: "/upload-video" },
+          { label: "Upload Requests", route: "/upload-requests" }
+        ],
       },
       {
         icon: (

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "apexcharts": "^3.45.2",
+    "axios": "^1.7.8",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "flatpickr": "^4.6.13",

@@ -20,7 +20,7 @@ export type GoogleAccountDetails = {
 export async function getUser(email: string) {
   try {
     await db();
-    let user = await UserModel.findOne({ email }).populate("mainUserId");
+    let user = await UserModel.findOne({ email }).populate("mainUserId").lean();
     if (user) return user as User | null; // Type cast to User;
     return null;
   } catch (error) {
@@ -41,14 +41,14 @@ export async function addSubUser(
       let user = await UserModel.findOne({ email }).lean();
       if (user) return reject({ message: "Email already exist." });
 
-      let defaultPassword = await hashPassword("password@123")
+      let defaultPassword = await hashPassword("password@123");
       let newUser = await UserModel.create({
         firstName,
         lastName,
         email,
         mainUserId,
         subUser: true,
-        password: defaultPassword
+        password: defaultPassword,
       });
       return resolve(newUser);
     } catch (error) {
@@ -115,6 +115,23 @@ export async function getUserGoogleToken(email: any) {
   try {
     await db();
     let user = await UserModel.findOne({ email: email });
+    return user?.googleAccessToken;
+  } catch (error) {
+    // console.log(error);
+    throw error;
+  }
+}
+
+export async function updateUserToken(userId: any, accessToken: string) {
+  try {
+    await db();
+    let user = await UserModel.findByIdAndUpdate(
+      userId,
+      {
+        googleAccessToken: accessToken,
+      },
+      { new: true },
+    );
     return user?.googleAccessToken;
   } catch (error) {
     // console.log(error);
