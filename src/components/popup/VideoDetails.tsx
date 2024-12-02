@@ -2,7 +2,7 @@ import { VideoRequest } from "../Tables/WorkflowTable";
 
 interface WorkflowDetails extends VideoRequest {
     workflowId?: string
-
+    videoId?: any
 }
 
 // Popup Component for Video Details
@@ -32,22 +32,28 @@ const VideoDetailsPopup: React.FC<VideoDetailsPopupProps> = ({
           Video Details
         </h2>
         <p className="mb-2 text-black dark:text-white">
-          <strong>Title:</strong> {video.title}
+          <strong>Title:</strong> {video?.videoId?.title!}
         </p>
         <p className="mb-2 text-black dark:text-white">
-          <strong>Description:</strong> {video.description}
+          <strong>Description:</strong> {video?.videoId?.description}
         </p>
         <p className="mb-2 text-black dark:text-white">
-          <strong>Sub User:</strong> {video.subUserName}
+          <strong>Tags:</strong> {video?.videoId?.tags?.join(', ')}
         </p>
-        <p className="mb-4 text-black dark:text-white">
-          <strong>Status:</strong> {video.status}
+        {/* <p className="mb-2 text-black dark:text-white">
+          <strong>Privacy:</strong> {video?.videoId?.privacy}
+        </p> */}
+        <p className="mb-2 text-black dark:text-white">
+          <strong>Category:</strong> {video?.videoId?.category}
         </p>
-        {video.youtubeVideoId ? (
+        {/* <p className="mb-4 text-black dark:text-white">
+          <strong>Status:</strong> {video?.status}
+        </p> */}
+        {video.videoId.youtubeVideoId ? (
           <div className="mb-4">
             <iframe
               className="h-64 w-full"
-              src={`https://www.youtube.com/embed/${video.youtubeVideoId}?rel=0`}
+              src={`https://www.youtube.com/embed/${video.videoId.youtubeVideoId}?rel=0`}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -65,13 +71,13 @@ const VideoDetailsPopup: React.FC<VideoDetailsPopupProps> = ({
         <div className="flex justify-end space-x-4">
           <button
             className="rounded bg-success px-4 py-2 text-white transition duration-200 hover:bg-opacity-90"
-            onClick={() => onApprove && onApprove(video.youtubeVideoId!, video.workflowId!)}
+            onClick={() => onApprove && onApprove(video.videoId.youtubeVideoId!, video.workflowId!)}
           >
             Approve
           </button>
           <button
             className="rounded bg-danger px-4 py-2 text-white transition duration-200 hover:bg-opacity-90"
-            onClick={() => onReject && onReject(video.youtubeVideoId!, video.workflowId!)}
+            onClick={() => onReject && onReject(video.videoId.youtubeVideoId!, video.workflowId!)}
           >
             Reject
           </button>

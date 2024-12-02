@@ -18,7 +18,7 @@ export async function GET(req: NextRequest) {
   if (!userDetails || userDetails.subUser)
     return NextResponse.json({ message: "Not authorized" });
 
-  console.log("sdsl")
+  // console.log("sdsl")
   let pendingRequests = await getPendingRequests(userDetails._id);
 
   return NextResponse.json({

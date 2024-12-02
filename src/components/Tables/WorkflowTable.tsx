@@ -27,6 +27,8 @@ interface WorkflowTableProps {
 const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
   const [selectedVideo, setSelectedVideo] = useState<VideoRequest | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   const handleViewDetails = (video: VideoRequest) => {
     setSelectedVideo(video);
@@ -40,14 +42,12 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
 
   const handleApprove = async (videoId: string, workflowId: string) => {
     try {
-        console.log("Inside approve ")
+      console.log("Inside approve ");
       const response = await axios.post(`/api/workflow/action`, {
         videoId,
         action: "Approved",
-        workflowId: workflowId
+        workflowId: workflowId,
       });
-    //   console.log(`Approved request with Video ID: ${videoId}, Workflow ID: ${workflowId}`);
-    //   console.log(response.data);
       // Add any additional logic, like refreshing the data or showing a success message
     } catch (error) {
       console.error("Error approving the request:", error);
@@ -56,16 +56,24 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
 
   const handleReject = async (videoId: string, workflowId: string) => {
     try {
-        console.log("Inside reject", videoId, workflowId)
-        const response = await axios.post(`/api/workflow/action`, {
-            videoId,
-            action: "Rejected",
-            workflowId: workflowId
-          });
+      console.log("Inside reject", videoId, workflowId);
+      const response = await axios.post(`/api/workflow/action`, {
+        videoId,
+        action: "Rejected",
+        workflowId: workflowId,
+      });
       // Add any additional logic, like refreshing the data or showing a success message
     } catch (error) {
       console.error("Error rejecting the request:", error);
     }
+  };
+
+  // Pagination logic
+  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const currentData = data.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -92,7 +100,7 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
             </tr>
           </thead>
           <tbody>
-            {data.map((request, key) => (
+            {currentData.map((request, key) => (
               <tr key={key}>
                 <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
                   <h5 className="font-medium text-black dark:text-white">
@@ -126,6 +134,18 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
             ))}
           </tbody>
         </table>
+        {/* Pagination controls */}
+        <div className="flex justify-center space-x-2 mt-4">
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map((pageNumber) => (
+            <button
+              key={pageNumber}
+              className={`px-4 py-2 rounded ${pageNumber === currentPage ? 'bg-primary text-white' : 'bg-gray-300 text-black'}`}
+              onClick={() => handlePageChange(pageNumber)}
+            >
+              {pageNumber}
+            </button>
+          ))}
+        </div>
       </div>
       {isPopupOpen && selectedVideo && (
         <VideoDetailsPopup
@@ -140,5 +160,3 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
 };
 
 export default WorkflowTable;
-
-
