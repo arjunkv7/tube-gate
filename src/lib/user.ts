@@ -3,6 +3,7 @@ import UserModel from "@/model/User";
 import db from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { hashPassword } from "./auth";
+import { Menu } from "@/model";
 
 export type GoogleUserDetails = {
   email?: string;
@@ -136,5 +137,26 @@ export async function updateUserToken(userId: any, accessToken: string) {
   } catch (error) {
     // console.log(error);
     throw error;
+  }
+}
+
+export async function getMenus(subUser: boolean) {
+  try {
+    await db();
+    let menus 
+    if(subUser) {
+      menus = await Menu.find({
+        role: "subUser"
+      });
+    } else {
+      menus = await Menu.find({
+        role: "mainUser"
+      });
+    }
+
+    return menus[0];
+  } catch (error) {
+    console.log(error);
+    throw error
   }
 }
