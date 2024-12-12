@@ -1,0 +1,153 @@
+[{
+  "_id": {
+    "$oid": "675abeb5b25824d61e85e943"
+  },
+  "role": "mainUser",
+  "menus": [
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Dashboard",
+      "route": "#",
+      "children": [
+        {
+          "label": "eCommerce",
+          "route": "/"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/video.svg",
+      "label": "Video Management",
+      "route": "#",
+      "children": [
+        {
+          "label": "Upload Video",
+          "route": "/upload-video"
+        },
+        {
+          "label": "Upload Requests",
+          "route": "/upload-requests"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/users.svg",
+      "label": "User Management",
+      "route": "#",
+      "children": [
+        {
+          "label": "Add Sub User",
+          "route": "/add-subuser"
+        },
+        {
+          "label": "View Sub Users",
+          "route": "/view-subusers"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Calendar",
+      "route": "/calendar"
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Profile",
+      "route": "/profile"
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Forms",
+      "route": "#",
+      "children": [
+        {
+          "label": "Form Elements",
+          "route": "/forms/form-elements"
+        },
+        {
+          "label": "Form Layout",
+          "route": "/forms/form-layout"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Tables",
+      "route": "/tables"
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Settings",
+      "route": "/settings"
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "675acb10b25824d61e85e945"
+  },
+  "role": "subUser",
+  "menus": [
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Dashboard",
+      "route": "#",
+      "children": [
+        {
+          "label": "eCommerce",
+          "route": "/"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/video.svg",
+      "label": "Video Management",
+      "route": "#",
+      "children": [
+        {
+          "label": "Upload Video",
+          "route": "/upload-video"
+        },
+        {
+          "label": "Upload Requests History",
+          "route": "/upload-request-history"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Calendar",
+      "route": "/calendar"
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Profile",
+      "route": "/profile"
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Forms",
+      "route": "#",
+      "children": [
+        {
+          "label": "Form Elements",
+          "route": "/forms/form-elements"
+        },
+        {
+          "label": "Form Layout",
+          "route": "/forms/form-layout"
+        }
+      ]
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Tables",
+      "route": "/tables"
+    },
+    {
+      "icon": "/images/logo/home.svg",
+      "label": "Settings",
+      "route": "/settings"
+    }
+  ]
+}]
