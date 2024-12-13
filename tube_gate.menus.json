@@ -5,7 +5,7 @@
   "role": "mainUser",
   "menus": [
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Dashboard",
       "route": "#",
       "children": [
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "icon": "/images/logo/video.svg",
+      "icon": "/images/icon/video.svg",
       "label": "Video Management",
       "route": "#",
       "children": [
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "icon": "/images/logo/users.svg",
+      "icon": "/images/icon/users.svg",
       "label": "User Management",
       "route": "#",
       "children": [
@@ -46,17 +46,17 @@
       ]
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Calendar",
       "route": "/calendar"
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Profile",
       "route": "/profile"
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Forms",
       "route": "#",
       "children": [
@@ -71,12 +71,12 @@
       ]
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Tables",
       "route": "/tables"
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Settings",
       "route": "/settings"
     }
@@ -89,7 +89,7 @@
   "role": "subUser",
   "menus": [
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Dashboard",
       "route": "#",
       "children": [
@@ -100,7 +100,7 @@
       ]
     },
     {
-      "icon": "/images/logo/video.svg",
+      "icon": "/images/icon/video.svg",
       "label": "Video Management",
       "route": "#",
       "children": [
@@ -115,17 +115,17 @@
       ]
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Calendar",
       "route": "/calendar"
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Profile",
       "route": "/profile"
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Forms",
       "route": "#",
       "children": [
@@ -140,12 +140,12 @@
       ]
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Tables",
       "route": "/tables"
     },
     {
-      "icon": "/images/logo/home.svg",
+      "icon": "/images/icon/home.svg",
       "label": "Settings",
       "route": "/settings"
     }
