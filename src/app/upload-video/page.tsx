@@ -1,5 +1,5 @@
 "use client";
-import ECommerce from "@/components/Dashboard/E-commerce";
+import ECommerce from "@/components/Dashboard/Dashboard";
 import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";

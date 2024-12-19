@@ -1,11 +1,11 @@
-[{
+{
   "_id": {
     "$oid": "675abeb5b25824d61e85e943"
   },
   "role": "mainUser",
   "menus": [
     {
-      "icon": "/images/icon/home.svg",
+      "icon": "home",
       "label": "Dashboard",
       "route": "#",
       "children": [
@@ -16,7 +16,7 @@
       ]
     },
     {
-      "icon": "/images/icon/video.svg",
+      "icon": "videoCamera",
       "label": "Video Management",
       "route": "#",
       "children": [
@@ -31,7 +31,7 @@
       ]
     },
     {
-      "icon": "/images/icon/users.svg",
+      "icon": "users",
       "label": "User Management",
       "route": "#",
       "children": [
@@ -46,17 +46,17 @@
       ]
     },
     {
-      "icon": "/images/icon/home.svg",
+      "icon": "home",
       "label": "Calendar",
       "route": "/calendar"
     },
     {
-      "icon": "/images/icon/home.svg",
+      "icon": "home",
       "label": "Profile",
       "route": "/profile"
     },
     {
-      "icon": "/images/icon/home.svg",
+      "icon": "home",
       "label": "Forms",
       "route": "#",
       "children": [
@@ -71,83 +71,14 @@
       ]
     },
     {
-      "icon": "/images/icon/home.svg",
+      "icon": "home",
       "label": "Tables",
       "route": "/tables"
     },
     {
-      "icon": "/images/icon/home.svg",
+      "icon": "home",
       "label": "Settings",
       "route": "/settings"
     }
   ]
-},
-{
-  "_id": {
-    "$oid": "675acb10b25824d61e85e945"
-  },
-  "role": "subUser",
-  "menus": [
-    {
-      "icon": "/images/icon/home.svg",
-      "label": "Dashboard",
-      "route": "#",
-      "children": [
-        {
-          "label": "eCommerce",
-          "route": "/"
-        }
-      ]
-    },
-    {
-      "icon": "/images/icon/video.svg",
-      "label": "Video Management",
-      "route": "#",
-      "children": [
-        {
-          "label": "Upload Video",
-          "route": "/upload-video"
-        },
-        {
-          "label": "Upload Requests History",
-          "route": "/upload-request-history"
-        }
-      ]
-    },
-    {
-      "icon": "/images/icon/home.svg",
-      "label": "Calendar",
-      "route": "/calendar"
-    },
-    {
-      "icon": "/images/icon/home.svg",
-      "label": "Profile",
-      "route": "/profile"
-    },
-    {
-      "icon": "/images/icon/home.svg",
-      "label": "Forms",
-      "route": "#",
-      "children": [
-        {
-          "label": "Form Elements",
-          "route": "/forms/form-elements"
-        },
-        {
-          "label": "Form Layout",
-          "route": "/forms/form-layout"
-        }
-      ]
-    },
-    {
-      "icon": "/images/icon/home.svg",
-      "label": "Tables",
-      "route": "/tables"
-    },
-    {
-      "icon": "/images/icon/home.svg",
-      "label": "Settings",
-      "route": "/settings"
-    }
-  ]
-}]
+}
