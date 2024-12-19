@@ -47,9 +47,38 @@ export async function getPendingRequests(userId: mongoose.Types.ObjectId) {
       mainUserId: new ObjectId(userId),
       status: "PENDING",
     })
+    .sort({ _id: -1})
       .populate("videoId subUserId", "-_id -password -mainUserId -userId")
       .lean();
-    console.log("after ");
+    return allRequests;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getApprovedRequests(userId: mongoose.Types.ObjectId) {
+  try {
+    let allRequests = await Workflow.find({
+      mainUserId: new ObjectId(userId),
+      status: "APPROVED",
+    })
+    .sort({ _id: -1})
+      .populate("videoId subUserId", "-_id -password -mainUserId -userId")
+      .lean();
+    return allRequests;
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function getAllApproveRequests(userId: mongoose.Types.ObjectId) {
+  try {
+    let allRequests = await Workflow.find({
+      subUserId: new ObjectId(userId)
+    })
+    .sort({ _id: -1})
+      .populate("videoId subUserId", "-_id -password -mainUserId -userId")
+      .lean();
     return allRequests;
   } catch (error) {
     throw error;

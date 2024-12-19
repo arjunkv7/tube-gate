@@ -14,8 +14,10 @@
     "axios": "^1.7.8",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
+    "clsx": "^2.1.1",
     "feather-icons": "^4.29.2",
     "flatpickr": "^4.6.13",
+    "framer-motion": "^11.15.0",
     "googleapis": "^144.0.0",
     "jsvectormap": "^1.6.0",
     "mongodb": "^6.9.0",
@@ -25,6 +27,7 @@
     "react": "^18",
     "react-apexcharts": "^1.4.1",
     "react-dom": "^18",
+    "tailwind-merge": "^2.5.5",
     "zod": "^3.23.8"
   },
   "devDependencies": {

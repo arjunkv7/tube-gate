@@ -2,22 +2,19 @@
 
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import { ChangeEvent, useEffect, useState } from "react";
-import TableThree from "@/components/Tables/TableThree";
-import WorkflowTable from "@/components/Tables/WorkflowTable";
-
+import { ChangeEvent, useEffect, useState } from "react"; 
+import AllUploadRequestTable from "@/components/Tables/AllUploadRequestsTable";
 
 export default function AllUploadRequests() {
-    const [pendingRequests, setPendingRequests] = useState([]);
+    const [approvedRequests, setApprovedRequests] = useState([]);
 
     useEffect(() => {
       const fetchPendingRequests = async () => {
         try {
-          const response = await fetch("/api/workflow/pending-requests");
+          const response = await fetch("/api/workflow/all-upload-request");
           if (response.ok) {
             const data = await response.json();
-            console.log("allRequests", data.data)
-            setPendingRequests(data.data);
+            setApprovedRequests(data.data);
           } else {
             console.error("Failed to fetch sub-users:", response.statusText);
           }
@@ -33,7 +30,7 @@ export default function AllUploadRequests() {
     <>
       <DefaultLayout>
         <div className="flex flex-col gap-9">
-          <Breadcrumb pageName="All Pending Upload Requests" />
+          <Breadcrumb pageName="All Approved Requests" />
           {/* <!-- Contact Form --> */}
           <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
             {/* <div className="border-b border-stroke px-6.5 py-4 dark:border-strokedark">
@@ -41,7 +38,7 @@ export default function AllUploadRequests() {
                 Contact Form
               </h3>
             </div> */}
-            <WorkflowTable data={ pendingRequests}/>
+            <AllUploadRequestTable data={ approvedRequests}/>
           </div>
         </div>
       </DefaultLayout>

@@ -5,6 +5,7 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ChangeEvent, useEffect, useState } from "react";
+import { getSession } from "next-auth/react";
 
 export default function UploadVideo() {
   const [video, setVideo] = useState<File | null>(null);
@@ -16,6 +17,7 @@ export default function UploadVideo() {
   const [license, setLicense] = useState("standard");
   const [uploading, setUploading] = useState<boolean>(false);
   const [videoId, setVideoId] = useState("");
+  
 
   interface UploadResponse {
     videoId: string;
@@ -126,7 +128,7 @@ export default function UploadVideo() {
                   />
                 </div>
 
-                <div className="mb-6">
+                {/* <div className="mb-6">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
                   Privacy Setting
                   </label>
@@ -139,7 +141,7 @@ export default function UploadVideo() {
                     <option value="unlisted">Unlisted</option>
                     <option value="private">Private</option>
                   </select>
-                </div>
+                </div> */}
 
                 <div className="mb-6">
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">

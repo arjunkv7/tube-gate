@@ -86,6 +86,7 @@ export async function updateVideoVisibility(
         id: videoId,
         status: {
           privacyStatus: privacyStatus,
+          "embeddable": true
         },
       },
     });

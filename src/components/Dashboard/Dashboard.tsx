@@ -1,8 +1,24 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CardDataStats from "../CardDataStats";
 
 const Dashboard: React.FC = () => {
+  const[numbers, setNumbers] = useState({
+    totalUploads: 0,
+    uploadRequests: 0,
+    pendingReviews: 0,
+    approvedUploads: 0,
+  });
+
+  useEffect(() => {
+    async function fetchCount() {
+      let response = await fetch("/api/user/dashboard-counts");
+      let data = await response.json();
+      setNumbers(data);
+    }
+    fetchCount()
+  }, [])
+
   return (
     <div className="p-6 bg-gray-100 dark:bg-graydark min-h-screen">
       {/* Header Section */}
@@ -19,9 +35,9 @@ const Dashboard: React.FC = () => {
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
         <CardDataStats
           title="Total Uploads"
-          total="1,245"
-          rate="5.25%"
-          levelUp
+          total={numbers?.totalUploads.toString()}
+          // rate="5.25%"
+          // levelUp
         >
           <svg
             className="fill-primary dark:fill-white"
@@ -40,9 +56,8 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           title="Upload Requests"
-          total="532"
-          rate="2.43%"
-          levelDown
+          total={numbers?.uploadRequests.toString()}
+          
         >
           <svg
             className="fill-primary dark:fill-white"
@@ -61,9 +76,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           title="Pending Reviews"
-          total="152"
-          rate="1.78%"
-          levelDown
+          total={numbers?.pendingReviews.toString()}
         >
           <svg
             className="fill-primary dark:fill-white"
@@ -82,9 +95,7 @@ const Dashboard: React.FC = () => {
         </CardDataStats>
         <CardDataStats
           title="Approved Uploads"
-          total="875"
-          rate="3.89%"
-          levelUp
+          total={numbers?.approvedUploads.toString()}
         >
           <svg
             className="fill-primary dark:fill-white"
@@ -104,7 +115,7 @@ const Dashboard: React.FC = () => {
       </div>
 
       {/* Additional Section */}
-      <div className="mt-8">
+      {/* <div className="mt-8">
         <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
           Latest Activities
         </h2>
@@ -113,7 +124,7 @@ const Dashboard: React.FC = () => {
             You can add a list or summary of recent activities or other metrics here.
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

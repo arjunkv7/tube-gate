@@ -2,6 +2,7 @@ import { VideoRequest } from "../Tables/WorkflowTable";
 
 interface WorkflowDetails extends VideoRequest {
     workflowId?: string
+    _id?: string
     videoId?: any
 }
 
@@ -11,6 +12,7 @@ interface VideoDetailsPopupProps {
   onClose: () => void;
   onApprove?: (videoId: string, workflowId: string) => void;
   onReject?: (videoId: string, workflowId: string) => void;
+  showButtons: boolean
 }
 
 const VideoDetailsPopup: React.FC<VideoDetailsPopupProps> = ({
@@ -18,7 +20,10 @@ const VideoDetailsPopup: React.FC<VideoDetailsPopupProps> = ({
   onClose,
   onApprove,
   onReject,
+  showButtons
 }) => {
+
+  console.log("showbuttons", showButtons)
   return (
     <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative w-11/12 rounded-lg bg-white p-6 dark:bg-boxdark md:w-2/3 lg:w-1/2">
@@ -68,21 +73,25 @@ const VideoDetailsPopup: React.FC<VideoDetailsPopupProps> = ({
             </video>
           )
         )}
-        <div className="flex justify-end space-x-4">
+
+        { showButtons && (
+          <div className="flex justify-end space-x-4">
           <button
             className="rounded bg-success px-4 py-2 text-white transition duration-200 hover:bg-opacity-90"
-            onClick={() => onApprove && onApprove(video.videoId.youtubeVideoId!, video.workflowId!)}
+            onClick={() => onApprove && onApprove(video.videoId.youtubeVideoId!, video._id!)}
           >
             Approve
           </button>
           <button
             className="rounded bg-danger px-4 py-2 text-white transition duration-200 hover:bg-opacity-90"
-            onClick={() => onReject && onReject(video.videoId.youtubeVideoId!, video.workflowId!)}
+            onClick={() => onReject && onReject(video.videoId.youtubeVideoId!, video._id!)}
           >
             Reject
           </button>
         </div>
-      </div>
+        )}
+        </div>
+        
     </div>
   );
 };

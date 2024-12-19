@@ -21,11 +21,11 @@
       "route": "#",
       "children": [
         {
-          "label": "Upload Video",
-          "route": "/upload-video"
+          "label": "Approved Requests",
+          "route": "/approved-requests"
         },
         {
-          "label": "Upload Requests",
+          "label": "Pending Requests",
           "route": "/upload-requests"
         }
       ]

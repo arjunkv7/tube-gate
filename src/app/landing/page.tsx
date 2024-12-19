@@ -1,20 +1,27 @@
 import React from "react";
 import Link from "next/link";
+import { TextGenerateEffect } from "@/components/ui/TextGenerateEffect";
 
 const LandingPage = () => {
   return (
     <div className="bg-gray-100 text-black dark:bg-graydark dark:text-white">
       {/* Hero Section */}
-      <header className="bg-blue-600 text-white py-16">
-        <div className="container mx-auto px-6 flex flex-col items-center text-center md:flex-row md:text-left md:justify-between">
+      <header className="bg-blue-600 py-16 text-white">
+        <div className="container mx-auto flex flex-col items-center px-6 text-center md:flex-row md:justify-between md:text-left">
           <div>
-            <h1 className="text-4xl font-bold md:text-5xl">
+            {/* <h1 className="text-4xl font-bold md:text-5xl">
               Welcome to <span className="text-white">TubeGate</span>
-            </h1>
-            <p className="mt-4 text-lg">
-              Simplify your YouTube workflow with seamless team collaboration.
-            </p>
-            <div className="mt-6 flex flex-col space-y-4 sm:flex-row sm:space-y-0 sm:space-x-4">
+            </h1> */}
+            <TextGenerateEffect
+              words="Welcome to TubeGate"
+              className=" text-bold text-4xl leading-snug tracking-wide text-black dark:text-white md:text-5xl"
+            />
+            <TextGenerateEffect
+              className="mt-4 text-lg"
+              words=" Simplify your YouTube workflow with seamless team collaboration"
+            />
+
+            <div className="mt-6 flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
               <Link
                 href="/signin"
                 className="rounded bg-white px-6 py-3 text-lg font-semibold text-blue-600 hover:bg-opacity-90"
@@ -40,9 +47,9 @@ const LandingPage = () => {
       </header>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50 dark:bg-boxdark">
+      <section className="bg-gray-50 py-16 dark:bg-boxdark">
         <div className="container mx-auto px-6">
-          <h2 className="text-3xl font-bold text-center text-black dark:text-white">
+          <h2 className="text-center text-3xl font-bold text-black dark:text-white">
             Why Choose TubeGate?
           </h2>
           <p className="mt-4 text-center text-graydark dark:text-bodydark2">
@@ -52,7 +59,8 @@ const LandingPage = () => {
             {[
               {
                 title: "Main & Subuser Accounts",
-                description: "Assign roles to video editors and streamline workflows.",
+                description:
+                  "Assign roles to video editors and streamline workflows.",
                 icon: "👥",
               },
               {
@@ -63,22 +71,26 @@ const LandingPage = () => {
               },
               {
                 title: "YouTube Integration",
-                description: "Publish approved videos directly to your YouTube channel.",
+                description:
+                  "Publish approved videos directly to your YouTube channel.",
                 icon: "📹",
               },
               {
                 title: "User-Friendly Dashboard",
-                description: "Manage video statuses and approvals in one place.",
+                description:
+                  "Manage video statuses and approvals in one place.",
                 icon: "📊",
               },
               {
                 title: "Seamless Notifications",
-                description: "Stay updated with requests and approvals in real-time.",
+                description:
+                  "Stay updated with requests and approvals in real-time.",
                 icon: "🔔",
               },
               {
                 title: "Customizable Privacy Settings",
-                description: "Control video privacy with ease (public, private, unlisted).",
+                description:
+                  "Control video privacy with ease (public, private, unlisted).",
                 icon: "🔒",
               },
             ].map((feature, index) => (

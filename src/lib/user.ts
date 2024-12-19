@@ -21,9 +21,146 @@ export type GoogleAccountDetails = {
 export async function getUser(email: string) {
   try {
     await db();
-    let user = await UserModel.findOne({ email }).populate("mainUserId").lean();
+    let user = await UserModel.findOne({ email, deleted: { $ne: true } })
+      .populate("mainUserId")
+      .lean();
     if (user) return user as User | null; // Type cast to User;
     return null;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
+
+export async function getUiCounts(userId: any, userType: string) {
+  try {
+    await db();
+    console.log(userId)
+    let counts: any = []
+    if(userType == "mainUser") {
+      let details = await UserModel.aggregate([
+        {
+          $match: {
+            _id: userId
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "pendingCount",
+            pipeline: [
+              {
+                $match: {
+                  status: "PENDING",
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                      "$mainUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "approvedCount",
+            pipeline: [
+              {
+                $match: {
+                  status: "APPROVED",
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                       "$mainUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "allCount",
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                      "$mainUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "uploadRequests",
+            pipeline: [
+              {
+                $match: {
+                  status:{
+                    $in: [
+                      "REJECTED",
+                      "APPROVED"
+                    ]
+                  },
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                      "$mainUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $project: {
+            totalUploads: {
+              $size: "$allCount"
+            },
+            approvedUploads: {
+              $size: "$approvedCount"
+            },
+            pendingReviews: {
+              $size: "$pendingCount"
+            },
+            uploadRequests: {
+              $size: "$uploadRequests"
+            }
+          }
+        }
+      ])
+      console.log(details[0])
+      counts = details[0]
+      return counts
+    } else if(userType == 'subUser') {
+
+    }
+    // let totalApprovedRequest = await 
+    // return null;
   } catch (error) {
     console.log(error);
     return null;
@@ -63,8 +200,11 @@ export async function getSubUsers(mainUserId: string) {
   return new Promise(async (resolve, reject) => {
     try {
       let allSubUsers = await UserModel.find({
+        deleted: {
+          $ne: true
+        },
         mainUserId: new ObjectId(mainUserId),
-      });
+      }).sort({ _id: -1});
       resolve(allSubUsers);
     } catch (error) {
       console.log(error);
@@ -143,20 +283,35 @@ export async function updateUserToken(userId: any, accessToken: string) {
 export async function getMenus(subUser: boolean) {
   try {
     await db();
-    let menus 
-    if(subUser) {
+    let menus;
+    if (subUser) {
       menus = await Menu.find({
-        role: "subUser"
+        role: "subUser",
       });
     } else {
       menus = await Menu.find({
-        role: "mainUser"
+        role: "mainUser",
       });
     }
 
     return menus[0];
   } catch (error) {
     console.log(error);
-    throw error
+    throw error;
+  }
+}
+
+export async function deleteSubUser(userId: any, email: any) {
+  try {
+    await db();
+    let response = await UserModel.findByIdAndUpdate(userId, {
+      deleted: true,
+    });
+    console.log(response)
+
+    return { message: "User deleted" };
+  } catch (error) {
+    // console.log(error);
+    throw error;
   }
 }

@@ -18,8 +18,8 @@ export async function POST(req: NextRequest) {
   }
   let userDetails = await getUser(session?.user?.email);
 
-
-  if (!userDetails || userDetails.subUser) return NextResponse.json({ message: "Not authorized" });
+  if (!userDetails || userDetails.subUser)
+    return NextResponse.json({ message: "Not authorized" });
 
   let checkTokenResponse = await checkAndRefreshToken(
     userDetails._id.toString(),
@@ -32,12 +32,19 @@ export async function POST(req: NextRequest) {
   }
 
   let { videoId, workflowId, action } = await req.json();
-  if (action == "Approved") {
+  if (action == "APPROVED") {
     // console.log("insdie approve", videoId, workflowId, action)
-    let response = await updateVideoVisibility(userGoogleToken, videoId, "public");
+    let response = await updateVideoVisibility(
+      userGoogleToken,
+      videoId,
+      "public",
+    );
     await updateWorkflowStatus(workflowId, action);
-  } else if (action == "Rejected") {
-    console.log("inside reject")
+    return NextResponse.json("Success");
+  } else if (action == "REJECTED") {
+    // console.log("inside reject")
+    await updateWorkflowStatus(workflowId, action);
+    return NextResponse.json("Success");
   }
 
   return NextResponse.json("Action is required");

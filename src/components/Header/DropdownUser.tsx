@@ -3,22 +3,22 @@ import Link from "next/link";
 import Image from "next/image";
 import ClickOutside from "@/components/ClickOutside";
 import { signIn, signOut } from "next-auth/react";
-
+import { UserCircleIcon } from "@heroicons/react/24/outline";
 
 interface User {
   firstName?: string;
   lastName?: string;
   email?: string;
-  image?: string
+  image?: string;
 }
 
 interface DropDownProperties {
-  user: User
-} 
+  user: User;
+}
 
-const DropdownUser:React.FC<DropDownProperties> = ({ user}) => {
+const DropdownUser: React.FC<DropDownProperties> = ({ user }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  console.log("user: ", user)
+  console.log("user: ", user);
   return (
     <ClickOutside onClick={() => setDropdownOpen(false)} className="relative">
       <Link
@@ -28,23 +28,25 @@ const DropdownUser:React.FC<DropDownProperties> = ({ user}) => {
       >
         <span className="hidden text-right lg:block">
           <span className="block text-sm font-medium text-black dark:text-white">
-           {user.name}
+            {user.firstName}
           </span>
-          <span className="block text-xs">  {user.name}</span>
+          <span className="block text-xs"> {user.lastName}</span>
         </span>
 
         <span className="h-12 w-12 rounded-full">
-          <Image
-            width={112}
-            height={112}
-            className="rounded-full"
-            src={user.image || ""}
-            style={{
-              width: "auto",
-              height: "auto",
-            }}
-            alt="User"
-          />
+          {user.image ? (
+            <Image
+              width={112}
+              height={112}
+              className="rounded-full"
+              src={user.image}
+              style={{
+                width: "auto",
+                height: "auto",
+              }}
+              alt="User"
+            />
+          ): (<UserCircleIcon/>)}
         </span>
 
         <svg
@@ -69,7 +71,7 @@ const DropdownUser:React.FC<DropDownProperties> = ({ user}) => {
         <div
           className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark`}
         >
-          <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
+          {/* <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
             <li>
               <Link
                 href="/profile"
@@ -141,8 +143,11 @@ const DropdownUser:React.FC<DropDownProperties> = ({ user}) => {
                 Account Settings
               </Link>
             </li>
-          </ul>
-          <button onClick={() => signOut()} className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+          </ul> */}
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          >
             <svg
               className="fill-current"
               width="22"
@@ -160,7 +165,6 @@ const DropdownUser:React.FC<DropDownProperties> = ({ user}) => {
                 fill=""
               />
             </svg>
-        
             Log Out
           </button>
         </div>

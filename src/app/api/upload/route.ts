@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
     // console.log(checkTokenResponse);
     let response: any = await uploadVideo(userGoogleToken, file, videoData);
     console.log("upload response: ", response.data.id, response );
-    (videoData as any).videoId = response.data.id;
+    (videoData as any).youtubeVideoId = response.data.id;
     (videoData as any).userId = userDetails._id;
 
     let videoDetails = await insertVideo(videoData);

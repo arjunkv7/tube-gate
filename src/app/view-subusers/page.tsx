@@ -25,6 +25,19 @@ export default function AllSubUsers() {
   
       fetchSubUsers();
     }, []);
+
+    async function handleDelete(userId: string, email: string) {
+      console.log("delete clicked, us", userId, email)
+
+      const response = await fetch("/api/user/delete-subuser", {
+        method: "POST",
+        body: JSON.stringify( {
+          userId,
+          email
+        })
+      });
+      window.location.reload(); // Reloads the page
+    }
  
   return (
     <>
@@ -38,7 +51,7 @@ export default function AllSubUsers() {
                 Contact Form
               </h3>
             </div> */}
-            <TableThree data={ allSubUsers}/>
+            <TableThree data={ allSubUsers} handleDelete={handleDelete}/>
           </div>
         </div>
       </DefaultLayout>

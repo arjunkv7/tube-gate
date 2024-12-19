@@ -12,6 +12,7 @@ export interface User extends Document {
   mainUserId?: any;
   email: string;
   password: string;
+  deleted: boolean
   _id: ObjectId
 }
 
@@ -33,6 +34,10 @@ let userSchema: Schema<User> = new Schema(
     googleRefreshToken: String,
     googleAccessToken: String,
     password: String,
+    deleted: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true },
 );

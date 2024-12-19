@@ -24,7 +24,7 @@ interface WorkflowTableProps {
   data: any[];
 }
 
-const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
+const AllUploadRequestTable: React.FC<WorkflowTableProps> = ({ data }) => {
   const [selectedVideo, setSelectedVideo] = useState<VideoRequest | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,7 +45,7 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
       
       const response = await axios.post(`/api/workflow/action`, {
         videoId,
-        action: "APPROVED",
+        action: "Approved",
         workflowId: workflowId,
       });
       setIsPopupOpen(false)
@@ -60,10 +60,9 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
       console.log("Inside reject", videoId, workflowId);
       const response = await axios.post(`/api/workflow/action`, {
         videoId,
-        action: "REJECTED",
+        action: "Rejected",
         workflowId: workflowId,
       });
-      setIsPopupOpen(false)
       // Add any additional logic, like refreshing the data or showing a success message
     } catch (error) {
       console.error("Error rejecting the request:", error);
@@ -149,17 +148,18 @@ const WorkflowTable: React.FC<WorkflowTableProps> = ({ data }) => {
           ))}
         </div>
       </div>
+
       {isPopupOpen && selectedVideo && (
         <VideoDetailsPopup
           video={selectedVideo}
           onClose={handleClosePopup}
           onApprove={handleApprove}
           onReject={handleReject}
-          showButtons={true}
+          showButtons={false}
         />
       )}
     </div>
   );
 };
 
-export default WorkflowTable;
+export default AllUploadRequestTable;
