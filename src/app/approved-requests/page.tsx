@@ -7,7 +7,7 @@ import TableThree from "@/components/Tables/TableThree";
 import WorkflowTable from "@/components/Tables/WorkflowTable";
 import ApprovedRequestsTable from "@/components/Tables/ApprovedRequests";
 
-export default function approvedRequests() {
+export default function ApprovedRequests() {
     const [approvedRequests, setApprovedRequests] = useState([]);
 
     useEffect(() => {
