@@ -16,7 +16,7 @@ export default function AllUploadRequests() {
           const response = await fetch("/api/workflow/pending-requests");
           if (response.ok) {
             const data = await response.json();
-            console.log("allRequests", data.data)
+            // console.log("allRequests", data.data)
             setPendingRequests(data.data);
           } else {
             console.error("Failed to fetch sub-users:", response.statusText);

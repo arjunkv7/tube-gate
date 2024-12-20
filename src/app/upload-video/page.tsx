@@ -32,7 +32,7 @@ export default function UploadVideo() {
 
   async function handleUpload(e: React.FormEvent) {
     e.preventDefault();
-    console.log("form submitted");
+    // console.log("form submitted");
     const formData = new FormData();
     if (!video) {
       alert("Please select a video");

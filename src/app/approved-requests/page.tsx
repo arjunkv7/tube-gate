@@ -16,7 +16,7 @@ export default function approvedRequests() {
           const response = await fetch("/api/workflow/approved-requests");
           if (response.ok) {
             const data = await response.json();
-            console.log("allRequests", data.data)
+            // console.log("allRequests", data.data)
             setApprovedRequests(data.data);
           } else {
             console.error("Failed to fetch sub-users:", response.statusText);

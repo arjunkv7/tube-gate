@@ -98,7 +98,7 @@ export const authOptions: NextAuthOptions = {
       if (user && account) {
         try {
           let existingUser = await getUser(user.email || "");
-          console.log(user, account);
+          // console.log(user, account);
           if (existingUser) {
             await updateUserGoogleLogin(user, account);
           } else {

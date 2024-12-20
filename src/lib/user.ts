@@ -32,10 +32,10 @@ export async function getUser(email: string) {
   }
 }
 
-export async function getUiCounts(userId: any, userType: string) {
+export async function getDashboardCounts(userId: any, userType: string) {
   try {
     await db();
-    console.log(userId)
+    // console.log(userId)
     let counts: any = []
     if(userType == "mainUser") {
       let details = await UserModel.aggregate([
@@ -156,10 +156,125 @@ export async function getUiCounts(userId: any, userType: string) {
       counts = details[0]
       return counts
     } else if(userType == 'subUser') {
-
+      let details = await UserModel.aggregate([
+        {
+          $match: {
+            _id: userId
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "pendingCount",
+            pipeline: [
+              {
+                $match: {
+                  status: "PENDING",
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                      "$subUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "approvedCount",
+            pipeline: [
+              {
+                $match: {
+                  status: "APPROVED",
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                       "$subUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "allCount",
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                      "$subUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $lookup: {
+            from: "workflows",
+            let: {
+              userId: "$_id"
+            },
+            as: "uploadRequests",
+            pipeline: [
+              {
+                $match: {
+                  status:{
+                    $in: [
+                      "REJECTED",
+                      "APPROVED"
+                    ]
+                  },
+                  $expr: {
+                    $eq: [
+                      "$$userId",
+                      "$subUserId"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        },
+        {
+          $project: {
+            totalUploads: {
+              $size: "$allCount"
+            },
+            approvedUploads: {
+              $size: "$approvedCount"
+            },
+            pendingReviews: {
+              $size: "$pendingCount"
+            },
+            uploadRequests: {
+              $size: "$uploadRequests"
+            }
+          }
+        }
+      ])
+      counts = details[0]
+      return counts
     }
-    // let totalApprovedRequest = await 
-    // return null;
+    return counts
   } catch (error) {
     console.log(error);
     return null;
