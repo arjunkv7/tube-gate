@@ -153,7 +153,6 @@ export async function getUiCounts(userId: any, userType: string) {
           }
         }
       ])
-      console.log(details[0])
       counts = details[0]
       return counts
     } else if(userType == 'subUser') {
