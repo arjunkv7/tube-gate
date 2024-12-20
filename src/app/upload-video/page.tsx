@@ -6,7 +6,7 @@ import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export default function UploadVideo() {
   const [video, setVideo] = useState<File | null>(null);
