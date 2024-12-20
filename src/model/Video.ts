@@ -6,7 +6,7 @@ export interface IVideo extends Document {
   title: string;
   description?: string;
   filePath: string;
-  videoId?: string;
+  youtubeVideoId?: string;
   isPublished: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -23,7 +23,7 @@ const videoSchema = new Schema<IVideo>(
     title: { type: String, required: true, trim: true },
     description: { type: String, trim: true },
     filePath: { type: String, required: false },
-    videoId: { type: String, default: null },
+    youtubeVideoId: { type: String, default: null },
     isPublished: { type: Boolean, default: false },
     tags: { type: Array, trim: true },
     privacy: { type: String, trim: true },

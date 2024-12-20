@@ -6,6 +6,7 @@ import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import { ChangeEvent, useEffect, useState } from "react";
 import { getSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function UploadVideo() {
   const [video, setVideo] = useState<File | null>(null);
@@ -17,6 +18,7 @@ export default function UploadVideo() {
   const [license, setLicense] = useState("standard");
   const [uploading, setUploading] = useState<boolean>(false);
   const [videoId, setVideoId] = useState("");
+  const router = useRouter();
   
 
   interface UploadResponse {
@@ -58,6 +60,7 @@ export default function UploadVideo() {
       if (response.ok) {
         setVideoId(data.videoId);
         alert("Video uploaded successfully!");
+        router.push('/upload-request-history')
       } else {
         alert(`Error: ${data.error}`);
       }
