@@ -29,7 +29,7 @@ const LandingPage = () => {
                 Get Started
               </Link>
               <Link
-                href="/features"
+                href="#"
                 className="rounded border-2 border-white px-6 py-3 text-lg font-semibold text-white hover:bg-white hover:text-blue-600"
               >
                 Learn More

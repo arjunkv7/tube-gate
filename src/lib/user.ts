@@ -4,6 +4,7 @@ import db from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 import { hashPassword } from "./auth";
 import { Menu } from "@/model";
+import bcrypt from 'bcrypt';
 
 export type GoogleUserDetails = {
   email?: string;
@@ -424,6 +425,23 @@ export async function deleteSubUser(userId: any, email: any) {
     console.log(response)
 
     return { message: "User deleted" };
+  } catch (error) {
+    // console.log(error);
+    throw error;
+  }
+}
+
+export async function changePassword(userId: any, newPassword: any) {
+  try {
+    await db();
+    console.log(newPassword)
+    let hashedPassword = await bcrypt.hash(newPassword, 10);
+    let response = await UserModel.findByIdAndUpdate(userId, {
+      password: hashedPassword,
+    });
+    
+
+    return { message: "Password updated successfully" };
   } catch (error) {
     // console.log(error);
     throw error;
